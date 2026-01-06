@@ -11,6 +11,12 @@ return {
             require("neo-tree").setup({
                 hide_root_node = true,
                 filesystem = {
+                    use_libuv_file_watcher = true,
+                    bind_to_cwd = true,
+                    cwd_target = {
+                        sidebar = "none",
+                        current = "none"
+                    },
                     filtered_items = {
                         visible = true,
                         hide_dotfiles = false,

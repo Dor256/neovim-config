@@ -3,6 +3,10 @@ local first_arg = vim.fn.argv(0)
 if first_arg ~= "" then
     -- Resolve to absolute path and strip trailing slash
     local abs_path = vim.fn.fnamemodify(first_arg, ":p"):gsub("/$", "")
+    -- If the argument is a directory, change to it
+    if vim.fn.isdirectory(abs_path) == 1 then
+        vim.cmd("cd " .. vim.fn.fnameescape(abs_path))
+    end
     vim.g.cwd_name = vim.fn.fnamemodify(abs_path, ":t")
 else
     vim.g.cwd_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")

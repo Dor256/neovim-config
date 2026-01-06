@@ -1,3 +1,4 @@
+local Snacks = require("snacks")
 -- Diagnostic Keymaps
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic error messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic list" })
@@ -35,8 +36,14 @@ vim.keymap.set("n", "<leader>r", function()
     vim.fn.winrestview(view)
 end, { desc = "Indent file without moving cursor" })
 
+-- LSP
 -- Hover documentation
 vim.keymap.set("n", "<leader>K", vim.lsp.buf.hover, { desc = "LSP help/documentation" })
+vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "LSP jump to definition" })
+vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, { desc = "LSP jump to declaration" })
+vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation, { desc = "LSP jump to implementation" })
+vim.keymap.set("n", "<leader>gt", vim.lsp.buf.type_definition, { desc = "LSP jump to type definition" })
+vim.keymap.set("n", "<leader>gr", Snacks.picker.lsp_references, { desc = "LSP jump to references" })
 
 -- Toggle comment on the current line
 vim.keymap.set("n", "<leader>/", "gcc", { remap = true, desc = "Toggle comment line" })
@@ -45,9 +52,9 @@ vim.keymap.set("v", "<leader>/", "gc", { remap = true, desc = "Toggle comment se
 
 -- Picker search
 -- Toggle/Resume the last picker you had open
-vim.keymap.set("n", "<leader>f", function() require("snacks").picker.grep() end, { desc = "Resume Last Search" })
+vim.keymap.set("n", "<leader>f", function() Snacks.picker.grep() end, { desc = "Resume Last Search" })
 
 -- Terminal
 -- Allow <Esc> to enter normal mode in terminal for browsing output
-vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { desc = "Exit terminal mode to normal mode" })
+vim.keymap.set('t', '<S-Esc>', [[<C-\><C-n>]], { desc = "Exit terminal mode to normal mode" })
 

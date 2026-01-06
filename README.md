@@ -108,11 +108,21 @@ Leader key is set to `<Space>`.
 |--------|------|-------------|
 | `<leader>e` | Normal | Show diagnostic error messages in floating window |
 | `<leader>q` | Normal | Open diagnostic list |
-| `<leader>K` | Normal | LSP hover documentation |
 | `<leader>r` | Normal | Format/indent entire file without moving cursor |
 | `<leader>s` | Normal | Replace word under cursor everywhere in file |
 | `<leader>/` | Normal | Toggle comment on current line |
 | `<leader>/` | Visual | Toggle comment on selected lines |
+
+### LSP (Language Server)
+
+| Keymap | Mode | Description |
+|--------|------|-------------|
+| `<leader>K` | Normal | LSP hover documentation |
+| `<leader>gd` | Normal | Jump to definition |
+| `<leader>gD` | Normal | Jump to declaration |
+| `<leader>gi` | Normal | Jump to implementation |
+| `<leader>gt` | Normal | Jump to type definition |
+| `<leader>gr` | Normal | Show references (using Snacks Picker) |
 
 ### File Navigation
 

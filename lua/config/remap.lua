@@ -51,10 +51,15 @@ vim.keymap.set("n", "<leader>/", "gcc", { remap = true, desc = "Toggle comment l
 vim.keymap.set("v", "<leader>/", "gc", { remap = true, desc = "Toggle comment selection" })
 
 -- Picker search
--- Toggle/Resume the last picker you had open
-vim.keymap.set("n", "<leader>f", function() Snacks.picker.grep() end, { desc = "Resume Last Search" })
+-- Search for a file
+vim.keymap.set("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "Search files" })
+-- Search for an occurrence
+vim.keymap.set("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "Search occurrence" })
 
 -- Terminal
 -- Allow <Esc> to enter normal mode in terminal for browsing output
 vim.keymap.set('t', '<S-Esc>', [[<C-\><C-n>]], { desc = "Exit terminal mode to normal mode" })
+
+-- Which key
+vim.keymap.set("n", "<leader>?", function() require("which-key").show({ global = false }) end, { desc = "Shows info for keymaps" })
 

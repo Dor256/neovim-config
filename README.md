@@ -98,6 +98,9 @@ Automatic bracket, quote, and tag pairing.
 #### [Mini.bufremove](https://github.com/echasnovski/mini.bufremove)
 Intelligently close buffers without disrupting window layout.
 
+#### [Which-key](https://github.com/folke/which-key.nvim)
+Displays available keybindings in a popup window to help discover and remember keyboard shortcuts.
+
 ## ⌨️ Keymaps
 
 Leader key is set to `<Space>`.
@@ -112,6 +115,7 @@ Leader key is set to `<Space>`.
 | `<leader>s` | Normal | Replace word under cursor everywhere in file |
 | `<leader>/` | Normal | Toggle comment on current line |
 | `<leader>/` | Visual | Toggle comment on selected lines |
+| `<leader>?` | Normal | Show available keybindings for current buffer |
 
 ### LSP (Language Server)
 
@@ -129,7 +133,8 @@ Leader key is set to `<Space>`.
 | Keymap | Mode | Description |
 |--------|------|-------------|
 | `<leader>o` | Normal | Toggle focus between Neo-tree and editor |
-| `<leader>f` | Normal | Open fuzzy file/text search (Snacks Picker) |
+| `<leader>ff` | Normal | Search for files |
+| `<leader>fg` | Normal | Search for text/grep in files |
 
 ### Buffer Management
 
@@ -151,7 +156,7 @@ Leader key is set to `<Space>`.
 | Keymap | Mode | Description |
 |--------|------|-------------|
 | `<C-j>` | Normal/Insert/Terminal | Toggle integrated terminal |
-| `<Esc>` | Terminal | Exit terminal mode to normal mode (for browsing output) |
+| `<S-Esc>` | Terminal | Exit terminal mode to normal mode (for browsing output) |
 
 ### Trouble (Diagnostics)
 
@@ -255,7 +260,8 @@ This configuration is structured for easy customization:
 │       ├── tabs.lua
 │       ├── terminal.lua
 │       ├── treesitter.lua
-│       └── trouble.lua
+│       ├── trouble.lua
+│       └── which-key.lua
 ```
 
 To add new plugins, create a new file in `lua/plugins/` that returns a lazy.nvim plugin spec.

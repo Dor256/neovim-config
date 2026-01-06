@@ -28,8 +28,20 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.termguicolors = true
+vim.opt.fillchars = {
+  vert = "║",
+  horiz = "═",
+  vertleft = "╣",    -- ║ meeting ═ from left
+  vertright = "╠",   -- ║ meeting ═ from right
+  verthoriz = "╬",   -- cross junction
+  horizup = "╩",     -- ═ meeting ║ from below
+  horizdown = "╦",   -- ═ meeting ║ from above
+  eob = " ",
+}
 
 vim.opt.showmode = false
+
+vim.opt.mouse = "a"
 
 -- No automatic comment insertion
 vim.cmd([[autocmd FileType * set formatoptions-=ro]])

@@ -5,6 +5,9 @@ return {
         "williamboman/mason-lspconfig.nvim",
     },
     config = function()
+        -- Import the on_attach function from keymaps
+        local keymaps = require("config.keymaps")
+        local on_attach = keymaps.on_attach
 
         -- Show definition function
         local _open_floating_preview = vim.lsp.util.open_floating_preview
@@ -33,6 +36,7 @@ return {
         -- We modify the global config table directly before enabling
         -- Lua
         vim.lsp.config.lua_ls = {
+            on_attach = on_attach,
             settings = {
                 Lua = {
                     diagnostics = { globals = { "vim" } },
@@ -41,7 +45,11 @@ return {
         }
 
         vim.lsp.config.eslint = {
-            on_attach = function(_, bufnr)
+            on_attach = function(client, bufnr)
+                -- Call the shared on_attach first to set up LSP keymaps
+                on_attach(client, bufnr)
+
+                -- Then add eslint-specific configuration
                 vim.api.nvim_buf_create_user_command(bufnr, "EslintFixAll", function()
                     vim.lsp.buf.execute_command({
                         command = "eslint.applyAllFixes",
@@ -61,8 +69,19 @@ return {
             end
         }
 
+        -- TypeScript/JavaScript
+        vim.lsp.config.ts_ls = {
+            on_attach = on_attach,
+        }
+
+        -- Python
+        vim.lsp.config.pyright = {
+            on_attach = on_attach,
+        }
+
         -- Haskell
         vim.lsp.config.hls = {
+            on_attach = on_attach,
             name = "hls",
             cmd = { "haskell-language-server-wrapper", "--lsp" },
             -- Important: Helps Neovim find the root even if you open a nested file

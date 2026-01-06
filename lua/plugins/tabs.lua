@@ -8,17 +8,18 @@ return {
                 options = {
                     show_buffer_close_icons = false,
                     show_close_icon = false,
-                    mode = "buffers", -- Show open files as tabs
-                    -- separator_style = "slant", -- Looks very modern
+                    mode = "buffer", -- Show open files as tabs
+                    separator_style = "slant", -- Looks very modern
                     always_show_bufferline = true,
+                    indicator = { style = "none" },
                     offsets = {
                         {
                             filetype = "neo-tree",
                             text = function()
                                 return vim.g.cwd_name
                             end,
-                            text_align = "left",
-                            separator = true,
+                            text_align = "center",
+                            separator = '║',
                             highlight = "Directory",
                             padding = 0,
                         }
@@ -32,10 +33,10 @@ return {
                     end,
                 },
                 highlights = {
-                    separator = { link = 'WinSeparator' },
-                    separator_visible = { link = 'WinSeparator' },
-                    separator_selected = { link = 'WinSeparator' },
-                    offset_separator = { link = 'WinSeparator' },
+                    offset_separator = {
+                        fg = { attribute = "fg", highlight = "WinSeparator" },
+                        bg = { attribute = "bg", highlight = "Normal" },
+                    },
                 },
             })
         end

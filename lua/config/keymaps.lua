@@ -23,11 +23,11 @@ vim.keymap.set("n", "<leader>w", function()
 end, { desc = "Close current buffer and move to next" })
 
 -- Move text
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move highlighted text down 1 line" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move highlighted text up 1 line" })
 
 -- Replace highlited text everywhere
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Replace highlighted text everywhere" })
 
 -- Format file
 vim.keymap.set("n", "<leader>r", function()

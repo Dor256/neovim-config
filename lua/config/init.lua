@@ -13,7 +13,7 @@ else
 end
 require("config.lazy")
 require("config.settings")
-require("config.remap")
+require("config.keymaps")
 
 vim.diagnostic.config({
     -- Ensure the most severe diagnostic is the one highlighted

@@ -28,7 +28,17 @@ return {
                 },
                 window = {
                     width = 30,
-                    position = "left",
+                    position = "float",
+                    mappings = {
+                        -- Disables native scroll mappings if you have them
+                        ["<ScrollWheelUp>"] = "none",
+                        ["<ScrollWheelDown>"] = "none",
+                    },
+                    popup = {
+                        title = function(_)
+                            return vim.g.cwd_name or "Neo-tree"
+                        end,
+                    },
                 },
             })
         end,

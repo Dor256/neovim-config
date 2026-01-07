@@ -50,6 +50,7 @@ local function on_attach(_, bufnr)
     vim.keymap.set("n", "<leader>gi", Snacks.picker.lsp_implementations, vim.tbl_extend("force", opts, { desc = "LSP jump to implementation" }))
     vim.keymap.set("n", "<leader>gt", vim.lsp.buf.type_definition, vim.tbl_extend("force", opts, { desc = "LSP jump to type definition" }))
     vim.keymap.set("n", "<leader>gr", Snacks.picker.lsp_references, vim.tbl_extend("force", opts, { desc = "LSP jump to references" }))
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "LSP Code Action" }))
 end
 
 -- Toggle comment on the current line

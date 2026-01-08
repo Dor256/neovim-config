@@ -58,3 +58,14 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
     end,
 })
 
+vim.opt.autoread = true
+
+-- Trigger autoread when the window gains focus or the buffer is entered
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  callback = function()
+    if vim.fn.mode() ~= 'c' then
+      vim.cmd("checktime")
+    end
+  end,
+})
+

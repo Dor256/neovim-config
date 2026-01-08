@@ -12,7 +12,10 @@ return {
     -- 'default' for mappings similar to built-in completion
     -- 'super-tab' for mappings similar to VS Code (Tab to accept/next)
     -- 'enter' for mappings similar to 'super-tab' but with 'Enter' to accept
-    keymap = { preset = 'super-tab' },
+    keymap = {
+            preset = 'enter',
+            ['<CR>'] = { 'accept', 'fallback' },
+        },
 
     appearance = {
       -- Sets the fallback highlight groups to nvim-cmp's highlight groups

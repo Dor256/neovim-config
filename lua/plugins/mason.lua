@@ -81,7 +81,12 @@ return {
 
         -- Haskell
         vim.lsp.config.hls = {
-            on_attach = on_attach,
+            on_attach = function(client, bufnr)
+                on_attach(client, bufnr)
+                vim.lsp.completion.enable(true, client.id, bufnr, {
+                    autotrigger = true,
+                })
+            end,
             name = "hls",
             cmd = { "haskell-language-server-wrapper", "--lsp" },
             -- Important: Helps Neovim find the root even if you open a nested file
@@ -92,9 +97,9 @@ return {
             filetypes = { "haskell", "lhaskell" },
             settings = {
                 haskell = {
-                    formattingProvider = "none"
+                    formattingProvider = "none",
                 }
-            }
+            },
         }
         -- B. Enable the servers
         -- You must explicitly enable the servers you want to run.
@@ -102,6 +107,16 @@ return {
 
         for _, server in ipairs(servers) do
             vim.lsp.enable(server)
+        end
+
+
+        vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
+            -- Only show messages that are Warnings (2) or Errors (1)
+            -- Info is (3), Log is (4)
+            if result.type <= 2 then
+                return vim.lsp.handlers["window/showMessage"](_, result, ctx)
+            end
+            return nil
         end
 
         vim.api.nvim_create_autocmd("FileType", {

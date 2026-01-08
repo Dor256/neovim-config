@@ -63,6 +63,8 @@ vim.keymap.set("v", "<leader>/", "gc", { remap = true, desc = "Toggle comment se
 vim.keymap.set("n", "<leader>ff", function() Snacks.picker.files() end, { desc = "Search files" })
 -- Search for an occurrence
 vim.keymap.set("n", "<leader>fg", function() Snacks.picker.grep() end, { desc = "Search occurrence" })
+-- Search for git conflicts
+vim.keymap.set("n", "<leader>fc", function() Snacks.picker.git_status() end, { desc = "Search git conflicts" })
 
 -- Terminal
 -- Allow <Esc> to enter normal mode in terminal for browsing output

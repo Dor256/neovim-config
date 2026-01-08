@@ -9,6 +9,7 @@ return {
                 NeoTreeDirectoryName = { fg = "${fg}" },
                 NeoTreeRootName = { fg = "${fg}" },
                 NeoTreeCursorLine = { bg = "${bg_statusline}" },
+                NeoTreeGitUntracked = { fg = "${green}" }
             }
         })
         vim.cmd.colorscheme("onedark")

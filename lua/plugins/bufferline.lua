@@ -1,6 +1,7 @@
 return {
     {
         'akinsho/bufferline.nvim',
+        enabled = true,
         version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons',
         config = function()
@@ -10,7 +11,7 @@ return {
                     show_close_icon = false,
                     mode = "buffer", -- Show open files as tabs
                     separator_style = "slant", -- Looks very modern
-                    always_show_bufferline = true,
+                    always_show_bufferline = false,
                     indicator = { style = "none" },
                     offsets = {
                         {
@@ -25,10 +26,9 @@ return {
                         }
                     },
                     custom_filter = function(buf_number)
-                        local name = vim.fn.bufname(buf_number)
-                        if name == "" then
-                            return false -- hide [No Name]
-                        end
+                        if vim.bo[buf_number].filetype == "neo-tree" then return false end
+                        if vim.fn.bufname(buf_number) == "" then return false end
+                        -- 2. Hide Neo-tree buffers from the tab list
                         return true
                     end,
                 },

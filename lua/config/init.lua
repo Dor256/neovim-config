@@ -1,9 +1,8 @@
 vim.g.mapleader = " "
 local first_arg = vim.fn.argv(0)
 if first_arg ~= "" then
-    -- Resolve to absolute path and strip trailing slash
     local abs_path = vim.fn.fnamemodify(first_arg, ":p"):gsub("/$", "")
-    -- If the argument is a directory, change to it
+
     if vim.fn.isdirectory(abs_path) == 1 then
         vim.cmd("cd " .. vim.fn.fnameescape(abs_path))
     end
@@ -58,14 +57,74 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
     end,
 })
 
-vim.opt.autoread = true
 
--- Trigger autoread when the window gains focus or the buffer is entered
-vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
-  callback = function()
-    if vim.fn.mode() ~= 'c' then
-      vim.cmd("checktime")
+-- Table to keep track of active watchers so we can stop them later
+local active_watchers = {}
+
+local function stop_watcher(bufnr)
+    if active_watchers[bufnr] then
+        active_watchers[bufnr]:stop()
+        active_watchers[bufnr] = nil
     end
-  end,
+end
+
+local function start_watcher(bufnr)
+    local file_path = vim.api.nvim_buf_get_name(bufnr)
+    -- Don't watch if not a real file or if already being watched
+    if file_path == "" or not vim.loop.fs_stat(file_path) or active_watchers[bufnr] then
+        return
+    end
+
+    local watcher = vim.loop.new_fs_event()
+    active_watchers[bufnr] = watcher
+
+    -- The actual watch logic
+    watcher:start(file_path, {}, vim.schedule_wrap(function(err)
+        if err then
+            stop_watcher(bufnr)
+            return
+        end
+
+        -- Reload the buffer from disk if it's valid and not modified
+        if vim.api.nvim_buf_is_valid(bufnr) and not vim.api.nvim_buf_get_option(bufnr, 'modified') then
+            vim.api.nvim_buf_call(bufnr, function()
+                vim.cmd("checktime")
+            end)
+        end
+    end))
+end
+
+-- Delete empty buffers when a file is opened
+local function delete_empty_buffers(current_buf)
+    for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+        if bufnr ~= current_buf
+            and vim.api.nvim_buf_is_valid(bufnr)
+            and vim.api.nvim_buf_is_loaded(bufnr)
+            and vim.api.nvim_buf_get_name(bufnr) == ""
+            and vim.bo[bufnr].buftype == ""
+            and not vim.bo[bufnr].modified
+            and vim.api.nvim_buf_line_count(bufnr) <= 1
+            and vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] == ""
+        then
+            vim.api.nvim_buf_delete(bufnr, { force = false })
+        end
+    end
+end
+
+-- 1. Start watching when a file is opened
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+    callback = function(args)
+        start_watcher(args.buf)
+        vim.schedule(function()
+            delete_empty_buffers(args.buf)
+        end)
+    end,
+})
+
+-- 2. CRITICAL: Stop watching when the buffer is closed to prevent memory leaks
+vim.api.nvim_create_autocmd("BufDelete", {
+    callback = function(args)
+        stop_watcher(args.buf)
+    end,
 })
 

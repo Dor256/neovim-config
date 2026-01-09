@@ -15,17 +15,21 @@ vim.opt.cursorline = true
 vim.opt.signcolumn = "yes:1"
 vim.opt.scrolloff = 8
 vim.opt.showcmd = true
+vim.opt.sessionoptions = "buffers,curdir,tabpages,winsize,help,globals,terminal,folds"
+vim.opt.autoread = true
 
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.config/nvim/undodir"
 vim.opt.undofile = true
 vim.opt.clipboard = "unnamed"
+vim.opt.nu = true
 
-vim.opt.hlsearch = true
+vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.opt.updatetime = 50
 
 vim.opt.termguicolors = true
 vim.opt.fillchars = {

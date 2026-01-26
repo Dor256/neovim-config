@@ -8,9 +8,12 @@ local watcher = vim.uv.new_fs_event()
 local on_change = vim.schedule_wrap(function()
     if package.loaded["neo-tree"] then
         pcall(function()
-            require("neo-tree.sources.filesystem.commands").refresh(
-                require("neo-tree.sources.manager").get_state("filesystem")
-            )
+            local manager = require("neo-tree.sources.manager")
+            local state = manager.get_state("filesystem")
+            -- Only refresh if neo-tree has a valid buffer (window is open)
+            if state.bufnr and vim.api.nvim_buf_is_valid(state.bufnr) then
+                require("neo-tree.sources.filesystem.commands").refresh(state)
+            end
         end)
     end
 end)
